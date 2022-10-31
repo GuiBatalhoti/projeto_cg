@@ -32,6 +32,7 @@ class UI(QMainWindow):
         r = float(self.red.text())/255
         g = float(self.green.text())/255
         b = float(self.blue.text())/255
+        
         #print(r,g,b)
         high = max(r, g, b)
         low = min(r, g, b)
@@ -59,8 +60,10 @@ class UI(QMainWindow):
     def clamp(self, value, min_value, max_value):
         return max(min_value, min(max_value, value))
 
+
     def saturate(self, value):
         return self.clamp(value, 0.0, 1.0)
+
 
     def hue_to_rgb(self, h):
         r = abs(h * 6.0 - 3.0) - 1.0
@@ -68,11 +71,11 @@ class UI(QMainWindow):
         b = 2.0 - abs(h * 6.0 - 4.0)
         return self.saturate(r), self.saturate(g), self.saturate(b)
 
+
     def hsl_to_rgb(self):
         h = float(self.hue.text())
         s = float(self.sat.text())
         l = float(self.light.text())
-
         r, g, b = self.hue_to_rgb(h)
         c = (1.0 - abs(2.0 * l - 1.0)) * s
         r = (r - 0.5) * c + l
@@ -83,6 +86,7 @@ class UI(QMainWindow):
         self.red.setText(str(round(g * 255, 0)))
         self.green.setText(str(round(r * 255, 0)))
         self.blue.setText(str(round(b * 255, 0)))
+
 
 if __name__ == '__main__':
 	# Initialize The App

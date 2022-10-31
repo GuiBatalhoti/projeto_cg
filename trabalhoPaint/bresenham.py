@@ -1,5 +1,6 @@
 import pygame
-
+import time
+import numpy as np
 
 def line_bresenham(window, lineColor, x1,y1,x2,y2):
     dx = abs(x2-x1)
@@ -18,10 +19,10 @@ def line_bresenham(window, lineColor, x1,y1,x2,y2):
  
 
 def bresenham(window, lineColor, x0, y0, x1, y1):
-    """Yield integer coordinates on the line from (x0, y0) to (x1, y1).
-    Input coordinates should be integers.
-    The result will contain both the start and the end point.
-    """
+    #Yield integer coordinates on the line from (x0, y0) to (x1, y1).
+    #Input coordinates should be integers.
+    #The result will contain both the start and the end point.
+    
     dx = x1 - x0
     dy = y1 - y0
 

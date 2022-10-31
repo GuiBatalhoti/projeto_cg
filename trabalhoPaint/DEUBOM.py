@@ -1,6 +1,5 @@
 import pygame
-import time
-import numpy as np
+
 
 def line_bresenham(window, lineColor, x1,y1,x2,y2):
     dx = abs(x2-x1)

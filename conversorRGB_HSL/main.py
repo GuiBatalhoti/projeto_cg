@@ -1,9 +1,7 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel, QFileDialog, QComboBox, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit
 from PyQt5 import uic
-from PyQt5.QtGui import QPixmap, qRgb, qRed, qGreen, qBlue, QColor, QImage
 
 import sys
-import os
 
 
 class UI(QMainWindow):

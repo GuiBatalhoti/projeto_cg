@@ -7,6 +7,8 @@ class InterfaceDesenho:
     def __init__(self) -> None:
         # iniciando a janela
         self.janela = pygame.display.set_mode((320, 240)) #tamanho da Janela
+        pygame.display.set_caption("Linhas Bresenham")
+
 
         # lista de pontos para desenhar, inclui os pontos já desenhados
         # e inclui os pontos que estão sendo desenhados

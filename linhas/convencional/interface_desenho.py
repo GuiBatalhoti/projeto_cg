@@ -7,6 +7,7 @@ class InterfaceDesenho:
     def __init__(self) -> None:
         # iniciando a janela
         self.janela = pygame.display.set_mode((320, 240)) #tamanho da Janela
+        pygame.display.set_caption("Linhas Convencionais")
 
         # lista de pontos para desenhar, inclui os pontos já desenhados
         # e inclui os pontos que estão sendo desenhados
@@ -30,22 +31,26 @@ class InterfaceDesenho:
             #preenchendo a janela apenas com braco no fundo
             self.janela.fill((255, 255, 255))
 
-            #pegando a posição atual quando o mouse é pressionado
+            #pegando a posição inicial quando o mouse é pressionado
             if any(pygame.mouse.get_pressed()) and not desenhando:
                 #retorno da posição de quando foi pressionado
                 posicao_inicial = pygame.mouse.get_pos() 
                 # agora pode desenhar
                 desenhando = True
 
+            #desenhando o linha vermelha de posição
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos()
+                pygame.draw.line(self.janela, (0,0,255), posicao_inicial, posicao_atual)
                 convencional(self.janela, (255,0,0), posicao_inicial, posicao_inicial)                                                                               
 
+            #salvando os pixels de posição inicial e final da reta
             if not any(pygame.mouse.get_pressed()) and desenhando:
                 posicao_atual = pygame.mouse.get_pos()
                 pontos.append((posicao_inicial, posicao_atual))
                 desenhando = False
             
+            # traçando as retas já feitas
             for i in range(len(pontos)):
                 convencional(self.janela, (0,0,0), pontos[i][0], pontos[i][1])                                                                       
 

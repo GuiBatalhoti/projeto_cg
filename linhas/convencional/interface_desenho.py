@@ -1,4 +1,4 @@
-from bresenham import bresenham
+from convencional import convencional
 import pygame
 
 
@@ -13,6 +13,7 @@ class InterfaceDesenho:
         pontos = []
 
         posicao_inicial = None
+        posicao_atual = None
 
         # variável para indicar se deve fazer a linha em tempo real ou não
         desenhando = False
@@ -38,15 +39,15 @@ class InterfaceDesenho:
 
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos()
-                bresenham(self.janela, (255,0,0), posicao_inicial[0], posicao_inicial[1], posicao_atual[0], posicao_atual[1])                                                                                 
+                convencional(self.janela, (255,0,0), posicao_inicial, posicao_inicial)                                                                               
 
             if not any(pygame.mouse.get_pressed()) and desenhando:
                 posicao_atual = pygame.mouse.get_pos()
                 pontos.append((posicao_inicial, posicao_atual))
                 desenhando = False
-
+            
             for i in range(len(pontos)):
-                bresenham(self.janela, (0, 0, 0), pontos[i][0][0], pontos[i][0][1], pontos[i][1][0], pontos[i][1][1])                                                                              
+                convencional(self.janela, (0,0,0), pontos[i][0], pontos[i][1])                                                                       
 
             pygame.display.flip()
 

@@ -32,7 +32,7 @@ class InterfaceDesenho:
             self.janela.fill((255, 255, 255))
 
             #pegando a posição inicial quando o mouse é pressionado
-            if any(pygame.mouse.get_pressed()) and not desenhando:
+            if any(pygame.mouse.get_pressed()) and desenhando is False:
                 #retorno da posição de quando foi pressionado
                 posicao_inicial = pygame.mouse.get_pos() 
                 # agora pode desenhar
@@ -41,11 +41,11 @@ class InterfaceDesenho:
             #desenhando o linha vermelha de posição
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos()
-                pygame.draw.line(self.janela, (0,0,255), posicao_inicial, posicao_atual)
-                convencional(self.janela, (255,0,0), posicao_inicial, posicao_inicial)                                                                               
+                # pygame.draw.line(self.janela, (0,0,255), posicao_inicial, posicao_atual)
+                convencional(self.janela, (0,0,255), posicao_inicial, posicao_atual)                                                                               
 
             #salvando os pixels de posição inicial e final da reta
-            if not any(pygame.mouse.get_pressed()) and desenhando:
+            if not any(pygame.mouse.get_pressed()) and desenhando is True:
                 posicao_atual = pygame.mouse.get_pos()
                 pontos.append((posicao_inicial, posicao_atual))
                 desenhando = False

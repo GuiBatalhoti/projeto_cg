@@ -41,7 +41,6 @@ class InterfaceDesenho:
             #desenhando o linha vermelha de posição
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos()
-                # pygame.draw.line(self.janela, (0,0,255), posicao_inicial, posicao_atual)
                 convencional(self.janela, (0,0,255), posicao_inicial, posicao_atual)                                                                               
 
             #salvando os pixels de posição inicial e final da reta

@@ -1,4 +1,4 @@
-from circulo_bresenham import circulo_bresenham
+from circulo_convencional import circulo_convencional
 import pygame
 
 
@@ -7,7 +7,7 @@ class InterfaceDesenho:
     def __init__(self) -> None:
         # iniciando a janela
         self.janela = pygame.display.set_mode((320, 240)) #tamanho da Janela
-        pygame.display.set_caption("Círculo Bresenham")
+        pygame.display.set_caption("Cículo Convencional")
 
 
         # lista de pontos para desenhar, inclui os pontos já desenhados
@@ -40,7 +40,7 @@ class InterfaceDesenho:
 
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos() 
-                circulo_bresenham(self.janela, (255,0,0), posicao_inicial, posicao_atual)   
+                circulo_convencional(self.janela, (0,0,255), posicao_inicial, posicao_atual)   
             
             if not any(pygame.mouse.get_pressed()) and desenhando:
                 posicao_atual = pygame.mouse.get_pos()
@@ -48,7 +48,7 @@ class InterfaceDesenho:
                 desenhando = False
 
             for i in range(len(pontos)):
-                circulo_bresenham(self.janela, (0,0,0), pontos[i][0], pontos[i][1])   
+                circulo_convencional(self.janela, (0,0,0), pontos[i][0], pontos[i][1])  
             
             pygame.display.flip()
 

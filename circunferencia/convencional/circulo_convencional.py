@@ -1,8 +1,6 @@
-import pygame
 from pygame import gfxdraw
-import time
 import numpy as np
-from math import cos, sin, sqrt, pow
+from math import sqrt, pow
 
 
 

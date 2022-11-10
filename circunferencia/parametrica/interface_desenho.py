@@ -6,7 +6,7 @@ import pygame
 class InterfaceDesenho:
     def __init__(self) -> None:
         # iniciando a janela
-        self.janela = pygame.display.set_mode((320, 240)) #tamanho da Janela
+        self.janela = pygame.display.set_mode((640, 480)) #tamanho da Janela
         pygame.display.set_caption("Cículo Paramétrico")
 
 

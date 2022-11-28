@@ -45,14 +45,14 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">
-         <widget class="QRadioButton" name="btnOrigem">
+         <widget class="QRadioButton" name="btnRotacaoOrigem">
           <property name="text">
            <string>Origem</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QRadioButton" name="btnGlobal_2">
+         <widget class="QRadioButton" name="btnRotacaoCentroObejto">
           <property name="text">
            <string>Centro do Objeto</string>
           </property>
@@ -266,7 +266,7 @@
         <rect>
          <x>10</x>
          <y>29</y>
-         <width>131</width>
+         <width>191</width>
          <height>51</height>
         </rect>
        </property>
@@ -336,8 +336,8 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>261</width>
-         <height>71</height>
+         <width>266</width>
+         <height>81</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
@@ -363,14 +363,14 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QRadioButton" name="btnGlobal">
+         <widget class="QRadioButton" name="btnEscalaGlobal">
           <property name="text">
            <string>Global</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QRadioButton" name="btnLocal">
+         <widget class="QRadioButton" name="btnEscalaLocal">
           <property name="text">
            <string>Local</string>
           </property>

@@ -89,7 +89,7 @@ class UI(QMainWindow):
 
 
 if __name__ == '__main__':
-	# Initialize The App
+	# Inicializa a janela
 	app = QApplication(sys.argv)
 	UIWindow = UI()
 	app.exec_()

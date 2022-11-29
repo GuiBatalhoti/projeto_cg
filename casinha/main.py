@@ -114,10 +114,10 @@ class UI(QWidget):
             if self.group_escala.isChecked():
                 self.pontos_modificados[key] = self.operacao_escala(self.pontos_modificados[key])
 
-            """if self.group_translacao.isChecked():
-                ponto = self.operacao_translacao(ponto)
+            if self.group_translacao.isChecked():
+                self.pontos_modificados[key] = self.operacao_translacao(self.pontos_modificados[key])
 
-            if self.group_rotacao.isChecked():
+            """if self.group_rotacao.isChecked():
                 ponto = self.operacao_rotacao(ponto)
 
             if self.group_she
@@ -126,60 +126,9 @@ class UI(QWidget):
 
         self.render()
 
-    
-    def operacao_escala(self, ponto: list) -> list:
-        # Matriz de multiplicação
-        matriz = np.identity(4)
-        ponto = np.array(ponto)
-
-        if self.btn_global.isChecked():
-            valor_global = float(self.input_escala_global.text())
-            matriz[3][3] = valor_global
-            
-            produto = np.dot(ponto, matriz).astype(float)
-
-            if produto[3] != 1:
-                produto = [int(i/produto[3]) for i in produto]
-            else:
-                produto = [int(i) for i in produto]
-            
-            return produto
-            
-        elif self.btn_local.isChecked():
-            valor_x = float(self.input_escala_x.text())
-            valor_y = float(self.input_escala_y.text())
-            valor_z = float(self.input_escala_z.text())
-
-            matriz[0][0] = valor_x
-            matriz[1][1] = valor_y
-            matriz[2][2] = valor_z
-
-            produto = np.dot(ponto, matriz).astype(float)
-
-            if produto[3] != 1:
-                produto = [int(i/produto[3]) for i in produto]
-            else:
-                produto = [int(i) for i in produto]
-
-            return produto
-
-
-    def operacao_translacao(self, ponto: list) -> list:
-        pass
-
-
-    def operacao_rotacao(self, ponto: list) -> list:
-        if self.btn_origem.isChecked():
-            print("Origem \n")
-        else:
-            print("Centro do Objeto\n")
-
-
-    def operacao_shearing(self, ponto):
-        pass
-
 
     def render(self):
+        # Desenha a tela 
         self.canvas.fill(QColor(255,255,255))
         self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["b"][0], self.pontos_modificados["b"][1])
         self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["d"][0], self.pontos_modificados["d"][1])
@@ -198,7 +147,94 @@ class UI(QWidget):
         self.painter.drawLine(self.pontos_modificados["i"][0], self.pontos_modificados["i"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
 
         self.label_img.setPixmap(self.canvas)
+
     
+    def operacao_escala(self, ponto: list) -> list:
+        # Matriz de multiplicação
+        matriz = np.identity(4)
+
+        # Tranformando em nupy array para fazer a multiplicação
+        ponto = np.array(ponto)
+
+        # Se for escala Global
+        if self.btn_global.isChecked():
+            #pegando o valor da escala global
+            valor_global = float(self.input_escala_global.text())
+            matriz[3][3] = valor_global
+            
+            # Fazendo o produto entre a matriz e o ponto
+            produto = np.dot(ponto, matriz).astype(float)
+
+            #verificando as coordenadas homegêneas
+            produto = self.verifica_coord_homogenea(produto)
+            
+            return produto
+            
+        # Se for escala local
+        elif self.btn_local.isChecked():
+            # Pegando os valores da escala local
+            valor_x = float(self.input_escala_x.text())
+            valor_y = float(self.input_escala_y.text())
+            valor_z = float(self.input_escala_z.text())
+            matriz[0][0] = valor_x
+            matriz[1][1] = valor_y
+            matriz[2][2] = valor_z
+
+            # Fazendo o produto
+            produto = np.dot(ponto, matriz).astype(float)
+
+            #verificando as coordenadas homegêneas
+            produto = self.verifica_coord_homogenea(produto)
+
+            return produto
+
+        # se nada for selecionado retornar o próprio ponto,
+        # é um caso impossível, mas apenas por garantia
+        else:
+            return ponto
+
+
+    def operacao_translacao(self, ponto: list) -> list:
+        # Matriz de multiplicação
+        matriz = np.identity(4)
+
+        # Tranformando em nupy array para fazer a multiplicação
+        ponto = np.array(ponto)
+
+        # pegando os valores de entrada
+        valor_x = float(self.input_translacao_x.text())
+        valor_y = float(self.input_translacao_y.text())
+        valor_z = float(self.input_translacao_z.text())
+        matriz[3][0] = valor_x
+        matriz[3][1] = valor_y
+        matriz[3][2] = valor_z
+
+        produto = np.dot(ponto, matriz)
+
+        #verificando as coordenadas homegêneas
+        produto = self.verifica_coord_homogenea(produto)
+
+        return produto
+
+
+    def operacao_rotacao(self, ponto: list) -> list:
+        if self.btn_origem.isChecked():
+            print("Origem \n")
+        else:
+            print("Centro do Objeto\n")
+
+
+    def operacao_shearing(self, ponto):
+        pass
+
+
+    def verifica_coord_homogenea(self, produto):
+        # Transformando em coordenadas homogênas ou somente fazendo o cast para inteiro
+        if produto[3] != 1:
+            produto = [int(i/produto[3]) for i in produto]
+        else:
+            produto = [int(i) for i in produto]
+        return produto
 
 
 if __name__ == '__main__':

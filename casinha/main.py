@@ -1,3 +1,18 @@
+# Os pontos da casa são organizados da seguinte maneira:
+# A = (0,0,0), B = (100,0,0), C = (100,0,100), D = (0,0,100),
+# E = (0,100,0), F = (100,100,0), G = (100,100,100), H = (0,100,100),
+# I = (50,150,0), J = (50,150,100).
+# Os pontos que se ligam são 
+# - AB, AD, AE;
+# - BC, BF;
+# - CD, CG;
+# - DH;
+# - EH, EI;
+# - FI, FG;
+# - GJ;
+# - HJ;
+# - IJ;
+
 from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QLineEdit, QLabel, QGroupBox, QRadioButton, QComboBox
 from PyQt5 import uic
 from PyQt5.QtGui import QPixmap, QColor, QPainter, QPen
@@ -13,22 +28,28 @@ class UI(QWidget):
         uic.loadUi('casinha/janela.ui', self)
         self.show()
 
-        #montando o abejto de desenho
-        self.painter = QPainter(self)
-
         #Pontos originais da casinha
-        self.pontos_originais = [(0,0,0), (100,0,0), (100,0,100), (0,0,100), 
-                                 (0,100,0), (100,100,0), (100,100,100), (0,100,100),
-                                 (50,150,0), (50,150,100)]
-        
+        self.pontos_originais = {"a":(0,0,0,0), "b":(100,0,0,0), "c":(100,0,100,0), "d":(0,0,100,0), 
+                                 "e":(0,100,0,0), "f":(100,100,0,0), "g":(100,100,100,0), "h":(0,100,100,0),
+                                 "i":(50,150,0,0), "j":(50,150,100,0)}
+        self.pontos_modificados = None
+
+        #coloca os pontos originais dentro dos pontos modificados
         self.resetar_pontos()
 
         # Pegando os elementos da interface
         self.label_img = self.findChild(QLabel, "labelImg")
         self.btn_executar = self.findChild(QPushButton, "btnExecuta")
+        self.btn_resetar_pontos = self.findChild(QPushButton, "btnResetarPontos")
 
         #Imagem do desenho
-        self.canvas = QPixmap(1000,1000)
+        self.canvas = QPixmap(800,800)
+
+        #montando o abjeto de desenho
+        self.painter = QPainter(self.canvas)
+        self.canvas.fill(QColor(255,255,255))
+        pen = QPen()
+        self.painter.setPen(pen)
 
         #Grupos de Elementos
         #Grupo da Escala
@@ -74,33 +95,48 @@ class UI(QWidget):
 
         #Evento de quando clicar em Executar
         self.btn_executar.clicked.connect(self.executar)
+        self.btn_resetar_pontos.clicked.connect(self.resetar_pontos)
 
         #rederizando a primeira casinha
         self.render()
 
     
     def resetar_pontos(self):
+        print("Pontos resetados!!\n")
         self.pontos_modificados = deepcopy(self.pontos_originais)
         
         
     def executar(self):
         # Realiza as operações
 
-        for ponto in self.pontos_modificados:
+        for key in self.pontos_modificados.keys():
             if self.group_escala.isChecked():
-                ponto = self.operacao_escala(ponto)
-            if self.group_escala.isChecked():
+                self.pontos_modificados[key] = self.operacao_escala(self.pontos_modificados[key])
+
+            """if self.group_translacao.isChecked():
                 ponto = self.operacao_translacao(ponto)
-            if self.group_escala.isChecked():
+
+            if self.group_rotacao.isChecked():
                 ponto = self.operacao_rotacao(ponto)
-            if self.group_escala.isChecked():
-                ponto = self.operacao_shearing(ponto)
+
+            if self.group_shearing.isChecked():
+                ponto = self.operacao_shearing(ponto)"""
 
         self.render()
 
     
-    def operacao_escala(self, ponto):
-        pass
+    def operacao_escala(self, ponto: dict):
+        if self.btn_global.isChecked():
+            valor_global = float(self.input_escala_global.text())
+            matriz = np.zeros((4,4))
+            matriz[3][3] = valor_global
+            
+            ponto = np.array(ponto)
+            
+            return (i.item() for i in np.dot(ponto, matriz))
+            
+        else:
+            print("Local\n")
 
 
     def operacao_translacao(self, ponto):
@@ -108,7 +144,10 @@ class UI(QWidget):
 
 
     def operacao_rotacao(self, ponto):
-        pass
+        if self.btn_origem.isChecked():
+            print("Origem \n")
+        else:
+            print("Centro do Objeto\n")
 
 
     def operacao_shearing(self, ponto):
@@ -116,13 +155,22 @@ class UI(QWidget):
 
 
     def render(self):
-        self.label_img.resize(1000,1000)
         self.canvas.fill(QColor(255,255,255))
-        self.painter.drawPixmap(self.rect(), self.canvas)
-        pen = QPen(QColor.red)
-        pen.color()
-        self.painter.setPen(pen)
-        self.painter.drawLine(10,10, 100,100)
+        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["b"][0], self.pontos_modificados["b"][1])
+        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["d"][0], self.pontos_modificados["d"][1])
+        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["e"][0], self.pontos_modificados["e"][1])
+        self.painter.drawLine(self.pontos_modificados["b"][0], self.pontos_modificados["b"][1], self.pontos_modificados["c"][0], self.pontos_modificados["c"][1])
+        self.painter.drawLine(self.pontos_modificados["b"][0], self.pontos_modificados["b"][1], self.pontos_modificados["f"][0], self.pontos_modificados["f"][1])
+        self.painter.drawLine(self.pontos_modificados["c"][0], self.pontos_modificados["c"][1], self.pontos_modificados["d"][0], self.pontos_modificados["d"][1])
+        self.painter.drawLine(self.pontos_modificados["c"][0], self.pontos_modificados["c"][1], self.pontos_modificados["g"][0], self.pontos_modificados["g"][1])
+        self.painter.drawLine(self.pontos_modificados["d"][0], self.pontos_modificados["d"][1], self.pontos_modificados["h"][0], self.pontos_modificados["h"][1])
+        self.painter.drawLine(self.pontos_modificados["e"][0], self.pontos_modificados["e"][1], self.pontos_modificados["h"][0], self.pontos_modificados["h"][1])
+        self.painter.drawLine(self.pontos_modificados["e"][0], self.pontos_modificados["e"][1], self.pontos_modificados["i"][0], self.pontos_modificados["i"][1])
+        self.painter.drawLine(self.pontos_modificados["f"][0], self.pontos_modificados["f"][1], self.pontos_modificados["i"][0], self.pontos_modificados["i"][1])
+        self.painter.drawLine(self.pontos_modificados["f"][0], self.pontos_modificados["f"][1], self.pontos_modificados["g"][0], self.pontos_modificados["g"][1])
+        self.painter.drawLine(self.pontos_modificados["g"][0], self.pontos_modificados["g"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
+        self.painter.drawLine(self.pontos_modificados["h"][0], self.pontos_modificados["h"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
+        self.painter.drawLine(self.pontos_modificados["i"][0], self.pontos_modificados["i"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
 
         self.label_img.setPixmap(self.canvas)
     

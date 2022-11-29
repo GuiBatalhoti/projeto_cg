@@ -1,18 +1,34 @@
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLineEdit, QLabel, QGroupBox, QRadioButton, QComboBox
+from PyQt5.QtWidgets import QWidget, QApplication, QPushButton, QLineEdit, QLabel, QGroupBox, QRadioButton, QComboBox
 from PyQt5 import uic
+from PyQt5.QtGui import QPixmap, QColor, QPainter, QPen
 import sys
+import numpy as np
+from copy import deepcopy
 
 
-class UI(QMainWindow):
+class UI(QWidget):
     def __init__(self):
         # inicianlizando a interface
         super(UI, self).__init__()
         uic.loadUi('casinha/janela.ui', self)
         self.show()
 
+        #montando o abejto de desenho
+        self.painter = QPainter(self)
+
+        #Pontos originais da casinha
+        self.pontos_originais = [(0,0,0), (100,0,0), (100,0,100), (0,0,100), 
+                                 (0,100,0), (100,100,0), (100,100,100), (0,100,100),
+                                 (50,150,0), (50,150,100)]
+        
+        self.resetar_pontos()
+
         # Pegando os elementos da interface
         self.label_img = self.findChild(QLabel, "labelImg")
-        self.btn_executa = self.findChild(QPushButton, "btnExecuta")
+        self.btn_executar = self.findChild(QPushButton, "btnExecuta")
+
+        #Imagem do desenho
+        self.canvas = QPixmap(1000,1000)
 
         #Grupos de Elementos
         #Grupo da Escala
@@ -55,6 +71,61 @@ class UI(QMainWindow):
         self.input_shearing_31 = self.findChild(QLineEdit, "shearing31")
         self.input_shearing_32 = self.findChild(QLineEdit, "shearing32")
         self.input_shearing_33 = self.findChild(QLineEdit, "shearing33")
+
+        #Evento de quando clicar em Executar
+        self.btn_executar.clicked.connect(self.executar)
+
+        #rederizando a primeira casinha
+        self.render()
+
+    
+    def resetar_pontos(self):
+        self.pontos_modificados = deepcopy(self.pontos_originais)
+        
+        
+    def executar(self):
+        # Realiza as operações
+
+        for ponto in self.pontos_modificados:
+            if self.group_escala.isChecked():
+                ponto = self.operacao_escala(ponto)
+            if self.group_escala.isChecked():
+                ponto = self.operacao_translacao(ponto)
+            if self.group_escala.isChecked():
+                ponto = self.operacao_rotacao(ponto)
+            if self.group_escala.isChecked():
+                ponto = self.operacao_shearing(ponto)
+
+        self.render()
+
+    
+    def operacao_escala(self, ponto):
+        pass
+
+
+    def operacao_translacao(self, ponto):
+        pass
+
+
+    def operacao_rotacao(self, ponto):
+        pass
+
+
+    def operacao_shearing(self, ponto):
+        pass
+
+
+    def render(self):
+        self.label_img.resize(1000,1000)
+        self.canvas.fill(QColor(255,255,255))
+        self.painter.drawPixmap(self.rect(), self.canvas)
+        pen = QPen(QColor.red)
+        pen.color()
+        self.painter.setPen(pen)
+        self.painter.drawLine(10,10, 100,100)
+
+        self.label_img.setPixmap(self.canvas)
+    
 
 
 if __name__ == '__main__':

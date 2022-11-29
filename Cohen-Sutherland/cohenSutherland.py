@@ -14,7 +14,10 @@ def avaliarCodigo(x, y):
     return codigo 
 
 # cortando uma linha de P1 = (x1, y1) para P2 = (x2, y2) 
-def cohenSutherland(x1, y1, x2, y2): 
+def cohenSutherland(janela, cor, posInicial, posFinal): 
+    x1,y1 = posInicial
+    x2,y2 = posFinal
+    listaPontos = []
     # avaliar o codigo das regioes p1 e p2
     codigo1 = avaliarCodigo(x1, y1) 
     codigo2 = avaliarCodigo(x2, y2) 
@@ -60,11 +63,16 @@ def cohenSutherland(x1, y1, x2, y2):
             if codigoFora == codigo1: 
                 x1 = x 
                 y1 = y 
-                codigo1 = avaliarCodigo(x1,y1) 
-            else: 
+                codigo1 = avaliarCodigo(x1,y1)
+             
+            if codigoFora == codigo2: 
                 x2 = x 
                 y2 = y 
                 codigo2 = avaliarCodigo(x2, y2) 
-            return aceitar
-    return aceitar
+            #listaPontos.append(aceitar)
+            #pygame.draw.line(janela, cor, (x1,y1), (x2,y2))
+            #return aceitar
+    #listaPontos.append(aceitar)
+    pygame.draw.line(janela, cor, (x1,y1), (x2,y2))
+    #return listaPontos
 

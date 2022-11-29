@@ -46,9 +46,7 @@ class InterfaceDesenho:
 
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos(self.janela, ) 
-                cohen = cohenSutherland(posicao_inicial[0], posicao_inicial[1], posicao_atual[0], posicao_atual[1])
-                if cohen != False:
-                    pygame.draw.line(self.janela, AZUL, (posicao_inicial[0], posicao_inicial[1]), (posicao_atual[0], posicao_atual[1]) )
+                pygame.draw.line(self.janela, AZUL, posicao_inicial, posicao_atual )
             
             if not any(pygame.mouse.get_pressed()) and desenhando:
                 posicao_atual = pygame.mouse.get_pos()
@@ -56,9 +54,7 @@ class InterfaceDesenho:
                 desenhando = False
 
             for i in range(len(pontos)):
-                cohen = cohenSutherland(pontos[i][0][0], pontos[i][0][1], pontos[i][1][0], pontos[i][1][1])
-                if cohen != False:
-                    pygame.draw.line(self.janela, PRETO, (pontos[i][0][0], pontos[i][0][1]), (pontos[i][1][0], pontos[i][1][1]))
+                cohenSutherland(self.janela, PRETO, pontos[i][0], pontos[i][1])
             
             pygame.display.flip()
 

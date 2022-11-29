@@ -28,28 +28,28 @@ class UI(QWidget):
         uic.loadUi('casinha/janela.ui', self)
         self.show()
 
-        #Pontos originais da casinha
-        self.pontos_originais = {"a":(0,0,0,0), "b":(100,0,0,0), "c":(100,0,100,0), "d":(0,0,100,0), 
-                                 "e":(0,100,0,0), "f":(100,100,0,0), "g":(100,100,100,0), "h":(0,100,100,0),
-                                 "i":(50,150,0,0), "j":(50,150,100,0)}
-        self.pontos_modificados = None
-
-        #coloca os pontos originais dentro dos pontos modificados
-        self.resetar_pontos()
-
-        # Pegando os elementos da interface
-        self.label_img = self.findChild(QLabel, "labelImg")
-        self.btn_executar = self.findChild(QPushButton, "btnExecuta")
-        self.btn_resetar_pontos = self.findChild(QPushButton, "btnResetarPontos")
-
         #Imagem do desenho
-        self.canvas = QPixmap(800,800)
+        self.canvas = QPixmap(10000,10000)
 
         #montando o abjeto de desenho
         self.painter = QPainter(self.canvas)
         self.canvas.fill(QColor(255,255,255))
         pen = QPen()
         self.painter.setPen(pen)
+
+        # Pegando os elementos da interface
+        self.label_img = self.findChild(QLabel, "labelImg")
+        self.btn_executar = self.findChild(QPushButton, "btnExecuta")
+        self.btn_resetar_pontos = self.findChild(QPushButton, "btnResetarPontos")
+
+        #Pontos originais da casinha
+        self.pontos_originais = {"a":[0,0,0,1], "b":[100,0,0,1], "c":[100,0,100,1], "d":[0,0,100,1], 
+                                 "e":[0,100,0,1], "f":[100,100,0,1], "g":[100,100,100,1], "h":[0,100,100,1],
+                                 "i":[50,150,0,1], "j":[50,150,100,1]}
+        self.pontos_modificados = None
+
+        #coloca os pontos originais dentro dos pontos modificados
+        self.resetar_pontos()
 
         #Grupos de Elementos
         #Grupo da Escala
@@ -104,6 +104,7 @@ class UI(QWidget):
     def resetar_pontos(self):
         print("Pontos resetados!!\n")
         self.pontos_modificados = deepcopy(self.pontos_originais)
+        self.render()
         
         
     def executar(self):
@@ -119,7 +120,8 @@ class UI(QWidget):
             if self.group_rotacao.isChecked():
                 ponto = self.operacao_rotacao(ponto)
 
-            if self.group_shearing.isChecked():
+            if self.group_she
+            aring.isChecked():
                 ponto = self.operacao_shearing(ponto)"""
 
         self.render()
@@ -128,12 +130,16 @@ class UI(QWidget):
     def operacao_escala(self, ponto: dict):
         if self.btn_global.isChecked():
             valor_global = float(self.input_escala_global.text())
-            matriz = np.zeros((4,4))
+            matriz = np.identity(4)
             matriz[3][3] = valor_global
             
             ponto = np.array(ponto)
+            aux = np.dot(ponto, matriz).astype(float)
+
+            if aux[3] != 1:
+                aux = [int(i/aux[3]) for i in aux]
             
-            return (i.item() for i in np.dot(ponto, matriz))
+            return aux
             
         else:
             print("Local\n")

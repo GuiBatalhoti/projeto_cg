@@ -117,12 +117,13 @@ class UI(QWidget):
             if self.group_translacao.isChecked():
                 self.pontos_modificados[key] = self.operacao_translacao(self.pontos_modificados[key])
 
-            """if self.group_rotacao.isChecked():
-                ponto = self.operacao_rotacao(ponto)
+            # if self.group_rotacao.isChecked():
+            #     self.pontos_modificados[key] = self.operacao_translacao(self.pontos_modificados[key])
 
-            if self.group_she
-            aring.isChecked():
-                ponto = self.operacao_shearing(ponto)"""
+
+            if self.group_shearing.isChecked():
+                self.pontos_modificados[key] = self.operacao_shearing(self.pontos_modificados[key])
+
 
         self.render()
 
@@ -158,9 +159,8 @@ class UI(QWidget):
 
         # Se for escala Global
         if self.btn_global.isChecked():
-            #pegando o valor da escala global
-            valor_global = float(self.input_escala_global.text())
-            matriz[3][3] = valor_global
+            #pegando o valor da escala global 
+            matriz[3][3] = float(self.input_escala_global.text())
             
             # Fazendo o produto entre a matriz e o ponto
             produto = np.dot(ponto, matriz).astype(float)
@@ -173,12 +173,9 @@ class UI(QWidget):
         # Se for escala local
         elif self.btn_local.isChecked():
             # Pegando os valores da escala local
-            valor_x = float(self.input_escala_x.text())
-            valor_y = float(self.input_escala_y.text())
-            valor_z = float(self.input_escala_z.text())
-            matriz[0][0] = valor_x
-            matriz[1][1] = valor_y
-            matriz[2][2] = valor_z
+            matriz[0][0] = float(self.input_escala_x.text())
+            matriz[1][1] = float(self.input_escala_y.text())
+            matriz[2][2] = float(self.input_escala_z.text())
 
             # Fazendo o produto
             produto = np.dot(ponto, matriz).astype(float)
@@ -202,12 +199,9 @@ class UI(QWidget):
         ponto = np.array(ponto)
 
         # pegando os valores de entrada
-        valor_x = float(self.input_translacao_x.text())
-        valor_y = float(self.input_translacao_y.text())
-        valor_z = float(self.input_translacao_z.text())
-        matriz[3][0] = valor_x
-        matriz[3][1] = valor_y
-        matriz[3][2] = valor_z
+        matriz[3][0] = float(self.input_translacao_x.text())
+        matriz[3][1] = float(self.input_translacao_y.text())
+        matriz[3][2] = float(self.input_translacao_z.text())
 
         produto = np.dot(ponto, matriz)
 
@@ -218,14 +212,58 @@ class UI(QWidget):
 
 
     def operacao_rotacao(self, ponto: list) -> list:
+        # Matriz de multiplicação
+        matriz = np.identity(4)
+
+        # Tranformando em nupy array para fazer a multiplicação
+        ponto = np.array(ponto)
+
+        #se for rotação na origem
         if self.btn_origem.isChecked():
             print("Origem \n")
-        else:
+
+        # se for rotação no centro do objeto
+        elif self.btn_centro_objeto.isChecked():
             print("Centro do Objeto\n")
+
+        # se nada for selecionado retornar o próprio ponto,
+        # é um caso impossível, mas apenas por garantia
+        else:
+            return ponto
 
 
     def operacao_shearing(self, ponto):
-        pass
+        # Matriz de multiplicação
+        matriz = np.identity(4)
+
+        # Tranformando em nupy array para fazer a multiplicação
+        ponto = np.array(ponto)
+
+        # Pegando os valores de entrada
+        matriz[0][0] = float(self.input_shearing_00.text())
+        matriz[0][1] = float(self.input_shearing_01.text())
+        matriz[0][2] = float(self.input_shearing_02.text())
+        matriz[0][3] = float(self.input_shearing_03.text())
+        matriz[1][0] = float(self.input_shearing_10.text())
+        matriz[1][1] = float(self.input_shearing_11.text())
+        matriz[1][2] = float(self.input_shearing_12.text())
+        matriz[1][3] = float(self.input_shearing_13.text())
+        matriz[2][0] = float(self.input_shearing_20.text())
+        matriz[2][1] = float(self.input_shearing_21.text())
+        matriz[2][2] = float(self.input_shearing_22.text())
+        matriz[2][3] = float(self.input_shearing_23.text())
+        matriz[3][0] = float(self.input_shearing_30.text())
+        matriz[3][1] = float(self.input_shearing_31.text())
+        matriz[3][2] = float(self.input_shearing_32.text())
+        matriz[3][3] = float(self.input_shearing_33.text())
+
+        # Fazendo o produto entre a matriz e o ponto
+        produto = np.dot(ponto, matriz)
+        
+        #verificando as coordenadas homogêneas
+        produto = self.verifica_coord_homogenea(produto)
+
+        return produto
 
 
     def verifica_coord_homogenea(self, produto):

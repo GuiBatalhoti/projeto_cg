@@ -70,7 +70,7 @@ class UI(QWidget):
         #Grupo da Rotação
         self.group_rotacao = self.findChild(QGroupBox, "groupRotacao")
         self.btn_origem = self.findChild(QRadioButton, "btnRotacaoOrigem")
-        self.btn_centro_obejto = self.findChild(QRadioButton, "btnRotacaoCentroObjeto")
+        self.btn_centro_objeto = self.findChild(QRadioButton, "btnRotacaoCentroObjeto")
         self.eixo = self.findChild(QComboBox, "comoBoxEixo")
         self.input_rotacao_graus = self.findChild(QLineEdit, "inputRotacaoGraus")
         
@@ -127,29 +127,48 @@ class UI(QWidget):
         self.render()
 
     
-    def operacao_escala(self, ponto: dict):
+    def operacao_escala(self, ponto: list) -> list:
+        # Matriz de multiplicação
+        matriz = np.identity(4)
+        ponto = np.array(ponto)
+
         if self.btn_global.isChecked():
             valor_global = float(self.input_escala_global.text())
-            matriz = np.identity(4)
             matriz[3][3] = valor_global
             
-            ponto = np.array(ponto)
-            aux = np.dot(ponto, matriz).astype(float)
+            produto = np.dot(ponto, matriz).astype(float)
 
-            if aux[3] != 1:
-                aux = [int(i/aux[3]) for i in aux]
+            if produto[3] != 1:
+                produto = [int(i/produto[3]) for i in produto]
+            else:
+                produto = [int(i) for i in produto]
             
-            return aux
+            return produto
             
-        else:
-            print("Local\n")
+        elif self.btn_local.isChecked():
+            valor_x = float(self.input_escala_x.text())
+            valor_y = float(self.input_escala_y.text())
+            valor_z = float(self.input_escala_z.text())
+
+            matriz[0][0] = valor_x
+            matriz[1][1] = valor_y
+            matriz[2][2] = valor_z
+
+            produto = np.dot(ponto, matriz).astype(float)
+
+            if produto[3] != 1:
+                produto = [int(i/produto[3]) for i in produto]
+            else:
+                produto = [int(i) for i in produto]
+
+            return produto
 
 
-    def operacao_translacao(self, ponto):
+    def operacao_translacao(self, ponto: list) -> list:
         pass
 
 
-    def operacao_rotacao(self, ponto):
+    def operacao_rotacao(self, ponto: list) -> list:
         if self.btn_origem.isChecked():
             print("Origem \n")
         else:

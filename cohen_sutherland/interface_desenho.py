@@ -39,10 +39,10 @@ class InterfaceDesenho:
                 desenhando = True
 
             ## desenhando a circunferencia
-            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MIN), (X_MAX, Y_MIN), width= 5)
-            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MIN), (X_MAX, Y_MAX), width = 5)
-            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MAX), (X_MIN, Y_MAX), width = 5)
-            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MAX), (X_MIN, Y_MIN), width = 5)
+            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MIN), (X_MAX, Y_MIN), width = 3)
+            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MIN), (X_MAX, Y_MAX), width = 3)
+            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MAX), (X_MIN, Y_MAX), width = 3)
+            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MAX), (X_MIN, Y_MIN), width = 3)
 
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos(self.janela, ) 

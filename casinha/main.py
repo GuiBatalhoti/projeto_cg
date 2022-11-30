@@ -109,7 +109,6 @@ class UI(QWidget):
         
     def executar(self):
         # Realiza as operações
-
         for key in self.pontos_modificados.keys():
             if self.group_escala.isChecked():
                 self.pontos_modificados[key] = self.operacao_escala(self.pontos_modificados[key])
@@ -117,9 +116,8 @@ class UI(QWidget):
             if self.group_translacao.isChecked():
                 self.pontos_modificados[key] = self.operacao_translacao(self.pontos_modificados[key])
 
-            # if self.group_rotacao.isChecked():
-            #     self.pontos_modificados[key] = self.operacao_translacao(self.pontos_modificados[key])
-
+            if self.group_rotacao.isChecked():
+                self.pontos_modificados[key] = self.operacao_rotacao(self.pontos_modificados[key])
 
             if self.group_shearing.isChecked():
                 self.pontos_modificados[key] = self.operacao_shearing(self.pontos_modificados[key])
@@ -131,21 +129,21 @@ class UI(QWidget):
     def render(self):
         # Desenha a tela 
         self.canvas.fill(QColor(255,255,255))
-        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["b"][0], self.pontos_modificados["b"][1])
-        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["d"][0], self.pontos_modificados["d"][1])
-        self.painter.drawLine(self.pontos_modificados["a"][0], self.pontos_modificados["a"][1], self.pontos_modificados["e"][0], self.pontos_modificados["e"][1])
-        self.painter.drawLine(self.pontos_modificados["b"][0], self.pontos_modificados["b"][1], self.pontos_modificados["c"][0], self.pontos_modificados["c"][1])
-        self.painter.drawLine(self.pontos_modificados["b"][0], self.pontos_modificados["b"][1], self.pontos_modificados["f"][0], self.pontos_modificados["f"][1])
-        self.painter.drawLine(self.pontos_modificados["c"][0], self.pontos_modificados["c"][1], self.pontos_modificados["d"][0], self.pontos_modificados["d"][1])
-        self.painter.drawLine(self.pontos_modificados["c"][0], self.pontos_modificados["c"][1], self.pontos_modificados["g"][0], self.pontos_modificados["g"][1])
-        self.painter.drawLine(self.pontos_modificados["d"][0], self.pontos_modificados["d"][1], self.pontos_modificados["h"][0], self.pontos_modificados["h"][1])
-        self.painter.drawLine(self.pontos_modificados["e"][0], self.pontos_modificados["e"][1], self.pontos_modificados["h"][0], self.pontos_modificados["h"][1])
-        self.painter.drawLine(self.pontos_modificados["e"][0], self.pontos_modificados["e"][1], self.pontos_modificados["i"][0], self.pontos_modificados["i"][1])
-        self.painter.drawLine(self.pontos_modificados["f"][0], self.pontos_modificados["f"][1], self.pontos_modificados["i"][0], self.pontos_modificados["i"][1])
-        self.painter.drawLine(self.pontos_modificados["f"][0], self.pontos_modificados["f"][1], self.pontos_modificados["g"][0], self.pontos_modificados["g"][1])
-        self.painter.drawLine(self.pontos_modificados["g"][0], self.pontos_modificados["g"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
-        self.painter.drawLine(self.pontos_modificados["h"][0], self.pontos_modificados["h"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
-        self.painter.drawLine(self.pontos_modificados["i"][0], self.pontos_modificados["i"][1], self.pontos_modificados["j"][0], self.pontos_modificados["j"][1])
+        self.painter.drawLine(-self.pontos_modificados["a"][0]+500, -self.pontos_modificados["a"][1]+500, -self.pontos_modificados["b"][0]+500, -self.pontos_modificados["b"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["a"][0]+500, -self.pontos_modificados["a"][1]+500, -self.pontos_modificados["d"][0]+500, -self.pontos_modificados["d"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["a"][0]+500, -self.pontos_modificados["a"][1]+500, -self.pontos_modificados["e"][0]+500, -self.pontos_modificados["e"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["b"][0]+500, -self.pontos_modificados["b"][1]+500, -self.pontos_modificados["c"][0]+500, -self.pontos_modificados["c"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["b"][0]+500, -self.pontos_modificados["b"][1]+500, -self.pontos_modificados["f"][0]+500, -self.pontos_modificados["f"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["c"][0]+500, -self.pontos_modificados["c"][1]+500, -self.pontos_modificados["d"][0]+500, -self.pontos_modificados["d"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["c"][0]+500, -self.pontos_modificados["c"][1]+500, -self.pontos_modificados["g"][0]+500, -self.pontos_modificados["g"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["d"][0]+500, -self.pontos_modificados["d"][1]+500, -self.pontos_modificados["h"][0]+500, -self.pontos_modificados["h"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["e"][0]+500, -self.pontos_modificados["e"][1]+500, -self.pontos_modificados["h"][0]+500, -self.pontos_modificados["h"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["e"][0]+500, -self.pontos_modificados["e"][1]+500, -self.pontos_modificados["i"][0]+500, -self.pontos_modificados["i"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["f"][0]+500, -self.pontos_modificados["f"][1]+500, -self.pontos_modificados["i"][0]+500, -self.pontos_modificados["i"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["f"][0]+500, -self.pontos_modificados["f"][1]+500, -self.pontos_modificados["g"][0]+500, -self.pontos_modificados["g"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["g"][0]+500, -self.pontos_modificados["g"][1]+500, -self.pontos_modificados["j"][0]+500, -self.pontos_modificados["j"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["h"][0]+500, -self.pontos_modificados["h"][1]+500, -self.pontos_modificados["j"][0]+500, -self.pontos_modificados["j"][1]+500)
+        self.painter.drawLine(-self.pontos_modificados["i"][0]+500, -self.pontos_modificados["i"][1]+500, -self.pontos_modificados["j"][0]+500, -self.pontos_modificados["j"][1]+500)
 
         self.label_img.setPixmap(self.canvas)
 
@@ -220,11 +218,19 @@ class UI(QWidget):
 
         #se for rotação na origem
         if self.btn_origem.isChecked():
-            print("Origem \n")
+            # rotação apenas com as matrizes de rotação
+            
+
+            return produto
 
         # se for rotação no centro do objeto
         elif self.btn_centro_objeto.isChecked():
+            # leva o obejto até a origem, rotaciona e volta para a aposição original
+            
+
+
             print("Centro do Objeto\n")
+            return ponto
 
         # se nada for selecionado retornar o próprio ponto,
         # é um caso impossível, mas apenas por garantia

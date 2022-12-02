@@ -71,9 +71,9 @@ class UI(QWidget):
 
         #Grupo da Translação
         self.group_translacao = self.findChild(QGroupBox, "groupTranslacao")
-        self.input_translacao_x = self.findChild(QLineEdit, "inputTranslacaoZ")
+        self.input_translacao_x = self.findChild(QLineEdit, "inputTranslacaoX")
         self.input_translacao_y = self.findChild(QLineEdit, "inputTranslacaoY")
-        self.input_translacao_z = self.findChild(QLineEdit, "inputTranslacaoX")
+        self.input_translacao_z = self.findChild(QLineEdit, "inputTranslacaoZ")
 
         #Grupo da Rotação
         self.group_rotacao = self.findChild(QGroupBox, "groupRotacao")
@@ -223,32 +223,28 @@ class UI(QWidget):
         if self.btn_origem.isChecked():
             # rotação apenas com as matrizes de rotação sem deslocamento
             matriz = self.matriz_rotacao()
-            
             # Fazendo o produto
             produto = np.dot(ponto, matriz)
-            
             #verificando as coordenadas homegêneas
             produto = self.verifica_coord_homogenea(produto)
-
             return produto
 
         # se for rotação no centro do objeto
         elif self.btn_centro_objeto.isChecked():
-            # leva o centro do objeto até a origem, rotaciona e volta para a aposição original
-            matriz = self.matriz_rotacao()
+            # montando as matrizes necessárias para a operação
+            matriz_rotacao = self.matriz_rotacao()
             matriz_translacao_centro = np.identity(4)
             matriz_translacao_centro[3][0] = -centro_objeto[0]
             matriz_translacao_centro[3][1] = -centro_objeto[1]
             matriz_translacao_centro[3][2] = -centro_objeto[2]
-            matriz_translacao_centro[3][3] = 1
 
             matriz_translacao_centro_inversa = np.identity(4)
             matriz_translacao_centro_inversa[3][0] = centro_objeto[0]
             matriz_translacao_centro_inversa[3][1] = centro_objeto[1]
             matriz_translacao_centro_inversa[3][2] = centro_objeto[2]
-            matriz_translacao_centro_inversa[3][3] = 1
-
-            produto = np.dot(np.dot(np.dot(ponto, matriz_translacao_centro), matriz), matriz_translacao_centro_inversa)
+            
+            # leva o centro do objeto até a origem, rotaciona e volta para a aposição original
+            produto = np.dot(np.dot(np.dot(ponto, matriz_translacao_centro), matriz_rotacao), matriz_translacao_centro_inversa)
             
             #verificando as coordenadas homegêneas
             produto = self.verifica_coord_homogenea(produto)
@@ -299,8 +295,6 @@ class UI(QWidget):
         # Transformando em coordenadas homogênas ou somente fazendo o cast para inteiro
         if produto[3] != 1:
             produto = [i/produto[3] for i in produto]
-        else:
-            produto = [i for i in produto]
         return produto
 
 
@@ -333,10 +327,7 @@ class UI(QWidget):
     def centro_objeto(self):
         # retorna o centro do objeto passabdo pelos pontos modificados
         tamanho = len(self.pontos_modificados.values())
-        x = 0
-        y = 0
-        z = 0
-
+        x = y = z = 0
         for i in self.pontos_modificados.values():
             x += i[0]
             y += i[1]

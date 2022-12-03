@@ -28,7 +28,7 @@ class UI(QWidget):
         self.show()
 
         #Imagem do desenho
-        self.canvas = QPixmap(10000,10000)
+        self.canvas = QPixmap(5000,5000)
 
         #montando o abjeto de desenho
         self.painter = QPainter(self.canvas)

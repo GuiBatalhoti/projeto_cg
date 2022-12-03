@@ -14,10 +14,10 @@ def avaliarCodigo(x, y):
     return codigo 
 
 # cortando uma linha de P1 = (x1, y1) para P2 = (x2, y2) 
-def cohenSutherland(janela, cor, posInicial, posFinal): 
+def cohen_sutherland(janela, cor, posInicial, posFinal): 
     x1,y1 = posInicial
     x2,y2 = posFinal
-    listaPontos = []
+
     # avaliar o codigo das regioes p1 e p2
     codigo1 = avaliarCodigo(x1, y1) 
     codigo2 = avaliarCodigo(x2, y2) 

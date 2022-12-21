@@ -26,7 +26,7 @@ class InterfaceDesenho:
                 # se o evento foi de saída, fechar a janela
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    exit(1)
+                    break
             
             #preenchendo a janela apenas com braco no fundo
             self.janela.fill((255, 255, 255))

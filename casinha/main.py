@@ -24,7 +24,7 @@ class UI(QWidget):
     def __init__(self):
         # inicianlizando a interface
         super(UI, self).__init__()
-        uic.loadUi('casinha/janela.ui', self)
+        uic.loadUi('./janela.ui', self)
         self.show()
 
         #Imagem do desenho

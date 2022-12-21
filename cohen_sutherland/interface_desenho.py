@@ -38,11 +38,19 @@ class InterfaceDesenho:
                 # agora pode desenhar
                 desenhando = True
 
+<<<<<<< HEAD:Cohen-Sutherland/interface_desenho.py
+            ## desenhando a retangulo
+            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MIN), (X_MAX, Y_MIN), width= 5)
+            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MIN), (X_MAX, Y_MAX), width = 5)
+            pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MAX), (X_MIN, Y_MAX), width = 5)
+            pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MAX), (X_MIN, Y_MIN), width = 5)
+=======
             ## desenhando o retângulo de limites
             pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MIN), (X_MAX, Y_MIN), width = 3)
             pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MIN), (X_MAX, Y_MAX), width = 3)
             pygame.draw.line(self.janela, (0,0,0), (X_MAX, Y_MAX), (X_MIN, Y_MAX), width = 3)
             pygame.draw.line(self.janela, (0,0,0), (X_MIN, Y_MAX), (X_MIN, Y_MIN), width = 3)
+>>>>>>> e866ed176371824f8964d5b2715678629b435bc6:cohen_sutherland/interface_desenho.py
 
             if desenhando is True:
                 posicao_atual = pygame.mouse.get_pos(self.janela, ) 

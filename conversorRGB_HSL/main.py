@@ -8,7 +8,7 @@ class UI(QMainWindow):
     def __init__(self):
         super(UI, self).__init__()
         #uipath = os.path.dirname(os.path.realpath(__file__)) + "/colorConversion.ui"
-        uipath = 'colorConversion.ui'
+        uipath = 'conversorRGB_HSL\colorConversion.ui'
         uic.loadUi(uipath, self)
 
         self.red = self.findChild(QLineEdit, "red")

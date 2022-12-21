@@ -10,7 +10,7 @@ class InterfaceDesenho:
         pygame.display.set_caption("Flood Fill - Vizinhança 4") #título da janela
 
         #abrindo a imagem 
-        imagem = pygame.image.load("flood_fill\Testar_FloodFill.jpg").convert()       
+        imagem = pygame.image.load("flood_fill\Testar_FloodFill.bmp").convert()       
 
         # loop infinito para verificar de alguém estpa tentando desenhar
         while True:

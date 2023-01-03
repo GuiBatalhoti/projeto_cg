@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style src = 'style.css'></style>
+    <title>z-buffer</title>
+</head>
+<body>
+    <canvas width="200" height="200" id="output"></canvas>
+    <label><span>Blue Z</span>
+    <input type="range" min="0" max="10" value="10" id="blueZ"/>
+    </label>
+    <label><span>Red Z</span>
+    <input type="range" min="0" max="10" value="5" id="redZ"/>
+    </label>
+    <label><span>Yellow Z</span>
+    <input type="range" min="0" max="10" value="8" id="yellowZ"/>
+    </label>
+    <label><span>Green Z</span>
+    <input type="range" min="0" max="10" value="4" id="greenZ"/>
+    </label>
+    <label><span>White Z</span>
+    <input type="range" min="0" max="10" value="3" id="whiteZ"/>
+    </label>
+    <label><span>Vary Z Per Pixel</span>
+    <input type="checkbox" id="varyz"/>
+    </label>
+</body>
+    <script src = 'script.js'></script>
+</html>

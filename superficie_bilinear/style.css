@@ -16,24 +16,26 @@ p {
     text-align: center;
 }
 
+
 #menu {
 	margin: 15px;
 	align-items: center;
     text-align: center;
 }
 
+
 #operacoes {
 	width: 100%;
 	align-items: center;
 	display: inline-flex;
 	justify-content: space-between;
-}
+} 
 
 #menuRotacao {
 	width: 20%;
 	position: relative;
 	padding-left: 20px;
-	left: 45%
+    left: 40%
 }
 
 #btnRotacao {
@@ -43,3 +45,4 @@ p {
     border-radius: 5px;
     font-size: 12pt;
 }
+

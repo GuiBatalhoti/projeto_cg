@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Trabalho CG</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <div id="menu">
+            <form>
+                <!-- <input id="ZBuffer" name="operacao" type="radio" checked/>Z-Buffer  -->
+                <!-- <input id="SupBilinear" name="operacao" type="radio" />Superfície Bilinear
+                <input id="VarrRot" name="operacao" type="radio" />Varredura rotacional -->
+                <input id="Iluminacao" name="operacao" type="radio" />Iluminação
+            </form>
+        </div>
+
+        <div id="canvas">
+            <canvas id="myCanvas" width="1000" height="500">Seu browser não suporta o elemento canvas</canvas>
+        </div>
+
+            <div id="menuIluminacao">
+                <div id="tipo1">
+                    <p>Ia</p>
+                    <input id="Ia" name="numberInput" value="1.0" />
+                    <p>Ka</p>
+                    <input id="Ka" name="numberInput" value="0.5" />
+                    <p>Il</p>
+                    <input id="Il" name="numberInput" value="1.0" />
+                    <button id="aplicarIluminacao1" disabled>Aplicar Iluminação 1</button>
+                </div>
+                <div id="tipo2">
+                    <p>k</p>
+                    <input id="k" name="numberInput" value="6" />
+                    <p>n</p>
+                    <input id="n" name="numberInput" value="10" />
+                    <button id="aplicarIluminacao2" disabled>Aplicar Iluminação 2</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

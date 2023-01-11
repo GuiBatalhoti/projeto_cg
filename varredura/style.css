@@ -29,17 +29,11 @@ p {
 	justify-content: space-between;
 }
 
-#menuRotacao {
-	width: 20%;
-	position: relative;
-	padding-left: 20px;
-	left: 45%
-}
 
-#btnRotacao {
-	margin-top: 5px;
-	padding: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 12pt;
+#menuVarredura {
+	width: 40%;
+	position: relative;
+	align-items: center;
+    left: 42%;
+    margin: 30px;
 }

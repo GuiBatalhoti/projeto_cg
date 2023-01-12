@@ -56,37 +56,41 @@ def edge_fill(image, x, y, fill_color, boundary_color):
 
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
+from PIL import ImageFont
 
 # Open an image file
-image = Image.open("D:\Lucas\Documentos\projetoCG\circunferencia\projeto_cg\edge_fill/image.png")
+image = Image.open("edge_fill\image.bmp")
 fig, ax = plt.subplots(1, 2)
 ax1, ax2 = ax.ravel()
 
 # Convert the image to a mutable format
 image = image.convert("RGB")
+draw = ImageDraw.Draw(image)
+font = ImageFont.truetype("arial.ttf", 20)
+draw.text((700, 80), 'original image', (255, 255, 255), font = font)
 image.show(title = 'original image')
 
 
-
-
+new_image = Image.open("edge_fill\image.bmp")
 
 # Define the starting point, fill color, and boundary color
-x, y = 300, 500
+x, y = 800, 500
 fill_color = (0, 0, 255)  # red
 boundary_color = (255, 0, 0)  # blue
 
 # Call the boundary fill function
-bounding_box = edge_fill(image, x, y, fill_color, boundary_color)
+bounding_box = edge_fill(new_image, x, y, fill_color, boundary_color)
 
 # Print the bounding box
 print(bounding_box)
 
 
 # Save the modified image
-image.save("D:\Lucas\Documentos\projetoCG\circunferencia\projeto_cg\edge_fill/filled_image.png")
+new_image.save("edge_fill\\filled_image.bmp")
 
 
-draw = ImageDraw.Draw(image)
-draw.rectangle(bounding_box, outline ="black", width=5)
+draw2 = ImageDraw.Draw(new_image)
+draw2.rectangle(bounding_box, outline ="black", width=5)
+draw2.text((700, 80), 'new image', (255, 255, 255), font = font)
 
-image.show(title = 'filled image')
+new_image.show(title = 'filled image')
